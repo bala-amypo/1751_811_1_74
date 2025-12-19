@@ -1,16 +1,29 @@
+package com.example.demo.controller;
+
+import com.example.demo.model.FraudCheckResult;
+import com.example.demo.service.FraudDetectionService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/fraud-check")
+@RequestMapping("/api/fraud")
 public class FraudDetectionController {
 
-    private final FraudDetectionService service;
+    private final FraudDetectionService fraudDetectionService;
 
-    public FraudDetectionController(FraudDetectionService service) {
-        this.service = service;
+    public FraudDetectionController(FraudDetectionService fraudDetectionService) {
+        this.fraudDetectionService = fraudDetectionService;
     }
 
     @PostMapping("/evaluate/{claimId}")
-    public FraudCheckResult evaluate(@PathVariable Long claimId) {
-        return service.evaluate(claimId);
+    public ResponseEntity<FraudCheckResult> evaluate(@PathVariable Long claimId) {
+        return ResponseEntity.ok(fraudDetectionService.evaluate(claimId));
+    }
+
+    @GetMapping("/result/{claimId}")
+    public ResponseEntity<FraudCheckResult> getResult(@PathVariable Long claimId) {
+        return ResponseEntity.ok(
+                fraudDetectionService.getResultByClaim(claimId)
+        );
     }
 }

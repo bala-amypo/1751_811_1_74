@@ -1,3 +1,10 @@
+package com.example.demo.controller;
+
+import com.example.demo.model.Claim;
+import com.example.demo.service.ClaimService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
 @RestController
 @RequestMapping("/api/claims")
 public class ClaimController {
@@ -9,7 +16,12 @@ public class ClaimController {
     }
 
     @PostMapping
-    public Claim create(@RequestBody Claim claim) {
-        return claimService.createClaim(claim);
+    public ResponseEntity<Claim> createClaim(@RequestBody Claim claim) {
+        return ResponseEntity.ok(claimService.createClaim(claim));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Claim> getClaim(@PathVariable Long id) {
+        return ResponseEntity.ok(claimService.getClaim(id));
     }
 }
