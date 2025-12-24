@@ -13,7 +13,7 @@ public class Policy {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;   // ✅ entity.User
+    private User user;
 
     // getters & setters
     public Long getId() { return id; }
