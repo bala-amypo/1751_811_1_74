@@ -1,7 +1,6 @@
-package com.example.demo.model;
+package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import java.time.LocalDate;
 
 @Entity
 public class Policy {
@@ -10,13 +9,21 @@ public class Policy {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private User user;
-
-    @Column(unique = true)
     private String policyNumber;
 
-    private String policyType;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;   // ✅ entity.User
+
+    // getters & setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public String getPolicyNumber() { return policyNumber; }
+    public void setPolicyNumber(String policyNumber) {
+        this.policyNumber = policyNumber;
+    }
+
+    public User getUser() { return user; }
+    public void setUser(User user) { this.user = user; }
 }
