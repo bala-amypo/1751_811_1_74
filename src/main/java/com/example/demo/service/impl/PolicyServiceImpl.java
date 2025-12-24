@@ -1,8 +1,7 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.model.Policy;
+import com.example.demo.entity.Policy;
 import com.example.demo.repository.PolicyRepository;
-import com.example.demo.repository.UserRepository;
 import com.example.demo.service.PolicyService;
 import org.springframework.stereotype.Service;
 
@@ -12,23 +11,23 @@ import java.util.List;
 public class PolicyServiceImpl implements PolicyService {
 
     private final PolicyRepository policyRepository;
-    private final UserRepository userRepository;
 
-    // Constructor order MUST match test
-    public PolicyServiceImpl(PolicyRepository policyRepository,
-                             UserRepository userRepository) {
+    public PolicyServiceImpl(PolicyRepository policyRepository) {
         this.policyRepository = policyRepository;
-        this.userRepository = userRepository;
     }
 
     @Override
-    public Policy createPolicy(Policy policy) {
+    public Policy savePolicy(Policy policy) {
         return policyRepository.save(policy);
     }
 
     @Override
-    public List<Policy> getPoliciesByUser(Long userId) {
-        // Minimal logic to satisfy tests
+    public Policy getPolicyById(Long id) {
+        return policyRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<Policy> getAllPolicies() {
         return policyRepository.findAll();
     }
 }

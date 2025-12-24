@@ -1,14 +1,13 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Policy;
+import com.example.demo.entity.Policy;
 import com.example.demo.service.PolicyService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/policies")
+@RequestMapping("/policies")
 public class PolicyController {
 
     private final PolicyService policyService;
@@ -18,12 +17,12 @@ public class PolicyController {
     }
 
     @PostMapping
-    public ResponseEntity<Policy> createPolicy(@RequestBody Policy policy) {
-        return ResponseEntity.ok(policyService.createPolicy(policy));
+    public Policy createPolicy(@RequestBody Policy policy) {
+        return policyService.savePolicy(policy);
     }
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Policy>> getPoliciesByUser(@PathVariable Long userId) {
-        return ResponseEntity.ok(policyService.getPoliciesByUser(userId));
+    @GetMapping
+    public List<Policy> getAllPolicies() {
+        return policyService.getAllPolicies();
     }
 }
