@@ -2,13 +2,12 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.FraudRule;
 import com.example.demo.service.FraudRuleService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/fraud-rules")
+@RequestMapping("/api/fraud-rules")
 public class FraudRuleController {
 
     private final FraudRuleService fraudRuleService;
@@ -18,16 +17,12 @@ public class FraudRuleController {
     }
 
     @PostMapping
-    public ResponseEntity<FraudRule> save(@RequestBody FraudRule rule) {
-        return ResponseEntity.ok(
-                fraudRuleService.save(rule)
-        );
+    public FraudRule addRule(@RequestBody FraudRule rule) {
+        return fraudRuleService.addRule(rule);
     }
 
     @GetMapping
-    public ResponseEntity<List<FraudRule>> getAll() {
-        return ResponseEntity.ok(
-                fraudRuleService.findAll()
-        );
+    public List<FraudRule> getAllRules() {
+        return fraudRuleService.getAllRules();
     }
 }
