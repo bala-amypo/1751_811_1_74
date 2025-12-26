@@ -26,6 +26,7 @@ public class AuthController {
                 new UsernamePasswordAuthenticationToken(email, password)
         );
 
-        return jwtUtil.generateToken(email);
+        return ResponseEntity.ok(jwt);
+
     }
 }

@@ -47,4 +47,8 @@ public class JwtUtil {
                 .build()
                 .parseClaimsJws(token);
     }
+    public String extractUsername(String token) {
+    return extractAllClaims(token).getSubject();
+}
+
 }
