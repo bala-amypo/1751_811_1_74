@@ -1,10 +1,10 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.Claim;
+import com.example.demo.model.Claim;
 
 public interface ClaimService {
 
-    Claim createClaim(Claim claim);
+    Claim createClaim(Long policyId, Claim claim);
 
-    Claim getClaim(Long id);
+    Claim getClaim(Long claimId);
 }

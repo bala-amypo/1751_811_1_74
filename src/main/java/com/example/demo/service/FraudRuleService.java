@@ -1,11 +1,8 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.FraudRule;
-import java.util.List;
+import com.example.demo.model.FraudRule;
 
 public interface FraudRuleService {
 
-    FraudRule createRule(FraudRule rule);
-
-    List<FraudRule> getAllRules();
+    FraudRule addRule(FraudRule rule);
 }
