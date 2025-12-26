@@ -1,54 +1,89 @@
 package com.example.demo.security;
 
-import com.example.demo.entity.User;
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+
+import org.springframework.stereotype.Component;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.function.Function;
 
+@Component
 public class JwtUtil {
 
-    private final Key key;
-    private final long expirationMillis;
+    // Token validity: 10 hours
+    private static final long JWT_TOKEN_VALIDITY = 10 * 60 * 60 * 1000;
 
-    public JwtUtil(String secret, long expirationMillis) {
-        this.key = Keys.hmacShaKeyFor(secret.getBytes());
-        this.expirationMillis = expirationMillis;
-    }
+    // Secret key (for demo / academic use)
+    private final Key signingKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
-    public String generateToken(User user) {
+    /**
+     * Generate JWT token using username (email)
+     */
+    public String generateToken(String username) {
         return Jwts.builder()
-                .setSubject(user.getEmail())
-                .claim("userId", user.getId())
-                .claim("role", user.getRole())
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + expirationMillis))
-                .signWith(key, SignatureAlgorithm.HS256)
+                .setSubject(username)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY))
+                .signWith(signingKey)
                 .compact();
     }
 
-    public boolean validateToken(String token) {
-        try {
-            parseToken(token);
-            return true;
-        } catch (JwtException | IllegalArgumentException ex) {
-            return false;
-        }
-    }
-
-    public String getEmailFromToken(String token) {
-        return parseToken(token).getBody().getSubject();
-    }
-
-    private Jws<Claims> parseToken(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(token);
-    }
+    /**
+     * Extract username (email) from token
+     */
     public String extractUsername(String token) {
-    return extractAllClaims(token).getSubject();
-}
+        return extractClaim(token, Claims::getSubject);
+    }
 
+    /**
+     * Validate token with username
+     */
+    public boolean validateToken(String token, String username) {
+        final String extractedUsername = extractUsername(token);
+        return (extractedUsername.equals(username) && !isTokenExpired(token));
+    }
+
+    /**
+     * Check if token is expired
+     */
+    private boolean isTokenExpired(String token) {
+        return extractExpiration(token).before(new Date());
+    }
+
+    /**
+     * Extract expiration date
+     */
+    private Date extractExpiration(String token) {
+        return extractClaim(token, Claims::getExpiration);
+    }
+
+    /**
+     * Generic claim extractor
+     */
+    private <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+        final Claims claims = extractAllClaims(token);
+        return claimsResolver.apply(claims);
+    }
+
+    /**
+     * ✅ THIS IS THE MISSING METHOD (NOW FIXED)
+     */
+    private Claims extractAllClaims(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(getSigningKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
+    /**
+     * Get signing key
+     */
+    private Key getSigningKey() {
+        return signingKey;
+    }
 }
