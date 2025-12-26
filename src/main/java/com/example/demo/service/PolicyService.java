@@ -1,11 +1,12 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Policy;
+
 import java.util.List;
 
 public interface PolicyService {
 
-    Policy savePolicy(Policy policy);
+    Policy createPolicy(Long userId, Policy policy);
 
-    List<Policy> getAllPolicies();
+    List<Policy> getPoliciesByUser(Long userId);
 }
