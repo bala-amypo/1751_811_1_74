@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Policy;
 import com.example.demo.service.PolicyService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,13 +17,19 @@ public class PolicyController {
         this.policyService = policyService;
     }
 
-    @PostMapping
-    public Policy createPolicy(@RequestBody Policy policy) {
-        return policyService.savePolicy(policy);
+    // ✅ CREATE POLICY
+    @PostMapping("/user/{userId}")
+    public ResponseEntity<Policy> createPolicy(
+            @PathVariable Long userId,
+            @RequestBody Policy policy) {
+
+        Policy saved = policyService.createPolicy(userId, policy);
+        return ResponseEntity.ok(saved);
     }
 
+    // ✅ GET ALL POLICIES
     @GetMapping
-    public List<Policy> getAllPolicies() {
-        return policyService.getAllPolicies();
+    public ResponseEntity<List<Policy>> getAllPolicies() {
+        return ResponseEntity.ok(policyService.getAllPolicies());
     }
 }
