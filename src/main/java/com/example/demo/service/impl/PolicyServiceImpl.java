@@ -1,21 +1,28 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.entity.Policy;
+import com.example.demo.repository.PolicyRepository;
 import com.example.demo.service.PolicyService;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
-import java.util.ArrayList;
 
 @Service
 public class PolicyServiceImpl implements PolicyService {
 
-    @Override
-    public Policy save(Policy policy) {
-        return policy;
+    private final PolicyRepository policyRepository;
+
+    public PolicyServiceImpl(PolicyRepository policyRepository) {
+        this.policyRepository = policyRepository;
     }
 
     @Override
-    public List<Policy> findAll() {
-        return new ArrayList<>();
+    public Policy savePolicy(Policy policy) {
+        return policyRepository.save(policy);
+    }
+
+    @Override
+    public List<Policy> getAllPolicies() {
+        return policyRepository.findAll();
     }
 }

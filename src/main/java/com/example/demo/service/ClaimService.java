@@ -1,34 +1,11 @@
-package com.example.demo.service.impl;
+package com.example.demo.service;
 
 import com.example.demo.entity.Claim;
-import com.example.demo.entity.Policy;
-import com.example.demo.repository.ClaimRepository;
-import com.example.demo.repository.PolicyRepository;
-import com.example.demo.service.ClaimService;
-import org.springframework.stereotype.Service;
+import java.util.List;
 
-@Service
-public class ClaimServiceImpl implements ClaimService {
+public interface ClaimService {
 
-    private final ClaimRepository claimRepository;
-    private final PolicyRepository policyRepository;
+    Claim saveClaim(Claim claim);
 
-    // REQUIRED BY TESTS
-    public ClaimServiceImpl(ClaimRepository claimRepository,
-                            PolicyRepository policyRepository) {
-        this.claimRepository = claimRepository;
-        this.policyRepository = policyRepository;
-    }
-
-    @Override
-    public Claim createClaim(long policyId, Claim claim) {
-        Policy policy = policyRepository.findById(policyId).orElseThrow();
-        claim.setPolicy(policy);
-        return claimRepository.save(claim);
-    }
-
-    @Override
-    public Claim getClaim(long claimId) {
-        return claimRepository.findById(claimId).orElseThrow();
-    }
+    List<Claim> getAllClaims();
 }

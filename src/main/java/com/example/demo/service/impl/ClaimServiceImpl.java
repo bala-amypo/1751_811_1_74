@@ -17,18 +17,12 @@ public class ClaimServiceImpl implements ClaimService {
     }
 
     @Override
-    public Claim createClaim(Claim claim) {
+    public Claim saveClaim(Claim claim) {
         return claimRepository.save(claim);
     }
 
     @Override
     public List<Claim> getAllClaims() {
         return claimRepository.findAll();
-    }
-
-    @Override
-    public Claim getClaimById(Long id) {
-        return claimRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Claim not found with id " + id));
     }
 }
