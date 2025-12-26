@@ -1,58 +1,30 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import java.time.LocalDate;
 
 @Entity
-@Table(
-    name = "policies",
-    uniqueConstraints = @UniqueConstraint(columnNames = "policyNumber")
-)
 public class Policy {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "user_id")
+    private String policyName;
+
+    @ManyToOne
     private User user;
-
-    @Column(nullable = false, unique = true)
-    private String policyNumber;
-
-    private String policyType;
-
-    private LocalDate startDate;
-    private LocalDate endDate;
 
     public Policy() {}
 
-    public Policy(User user, String policyNumber, String policyType,
-                  LocalDate startDate, LocalDate endDate) {
-        this.user = user;
-        this.policyNumber = policyNumber;
-        this.policyType = policyType;
-        this.startDate = startDate;
-        this.endDate = endDate;
+    public Policy(String policyName) {
+        this.policyName = policyName;
     }
 
-    // Getters & Setters
     public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
+    public String getPolicyName() { return policyName; }
     public User getUser() { return user; }
+
+    public void setId(Long id) { this.id = id; }
+    public void setPolicyName(String policyName) { this.policyName = policyName; }
     public void setUser(User user) { this.user = user; }
-
-    public String getPolicyNumber() { return policyNumber; }
-    public void setPolicyNumber(String policyNumber) { this.policyNumber = policyNumber; }
-
-    public String getPolicyType() { return policyType; }
-    public void setPolicyType(String policyType) { this.policyType = policyType; }
-
-    public LocalDate getStartDate() { return startDate; }
-    public void setStartDate(LocalDate startDate) { this.startDate = startDate; }
-
-    public LocalDate getEndDate() { return endDate; }
-    public void setEndDate(LocalDate endDate) { this.endDate = endDate; }
 }
