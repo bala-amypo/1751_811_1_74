@@ -1,12 +1,19 @@
-package com.example.demo.service;
+package com.example.demo.service.impl;
 
-import com.example.demo.entity.User;
+import com.example.demo.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
-public interface UserService {
+@Service
+public class UserServiceImpl {
 
-    User register(User user);
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    User authenticate(String email, String password);
-
-    User getUserById(Long id);
+    // REQUIRED BY TESTS
+    public UserServiceImpl(UserRepository userRepository,
+                           PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 }
