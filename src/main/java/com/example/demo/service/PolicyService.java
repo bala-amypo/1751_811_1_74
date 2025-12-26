@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.model.Policy;
+import com.example.demo.entity.Policy;
 
 import java.util.List;
 
