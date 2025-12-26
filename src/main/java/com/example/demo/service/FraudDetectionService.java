@@ -1,8 +1,8 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.FraudCheckResult;
+
 public interface FraudDetectionService {
 
-    String runDetection(Long claimId);
-
-    String getFraudResult(Long claimId);
+    FraudCheckResult getFraudResult(Long claimId);
 }
