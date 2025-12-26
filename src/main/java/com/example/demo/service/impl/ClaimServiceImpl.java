@@ -5,10 +5,12 @@ import com.example.demo.entity.Policy;
 import com.example.demo.repository.ClaimRepository;
 import com.example.demo.repository.PolicyRepository;
 import com.example.demo.service.ClaimService;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Service  // ⭐ WITHOUT THIS → YOUR ERROR HAPPENS
 public class ClaimServiceImpl implements ClaimService {
 
     private final ClaimRepository claimRepository;
@@ -20,20 +22,17 @@ public class ClaimServiceImpl implements ClaimService {
         this.policyRepository = policyRepository;
     }
 
-    // ===== Used by tests =====
     @Override
     public Claim createClaim(Long policyId, Claim claim) {
-
         Policy policy = policyRepository.findById(policyId)
                 .orElseThrow(() -> new IllegalArgumentException("Policy not found"));
 
-        if (claim.getClaimDate() != null &&
-                claim.getClaimDate().isAfter(LocalDate.now())) {
-            throw new IllegalArgumentException("Claim date cannot be future");
+        if (claim.getClaimDate().isAfter(LocalDate.now())) {
+            throw new IllegalArgumentException("Future date not allowed");
         }
 
-        if (claim.getClaimAmount() != null && claim.getClaimAmount() < 0) {
-            throw new IllegalArgumentException("Invalid claim amount");
+        if (claim.getClaimAmount() <= 0) {
+            throw new IllegalArgumentException("Amount must be positive");
         }
 
         claim.setPolicy(policy);
@@ -41,15 +40,9 @@ public class ClaimServiceImpl implements ClaimService {
     }
 
     @Override
-    public Claim getClaim(Long claimId) {
-        return claimRepository.findById(claimId)
+    public Claim getClaim(Long id) {
+        return claimRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Claim not found"));
-    }
-
-    // ===== Used by controller =====
-    @Override
-    public Claim saveClaim(Claim claim) {
-        return claimRepository.save(claim);
     }
 
     @Override
