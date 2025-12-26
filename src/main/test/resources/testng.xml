@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 
-<suite name="DemoApplication Test Suite" verbose="1" parallel="false">
+<suite name="Demo Application Test Suite" verbose="1">
 
-    <!-- Listeners -->
-    <listeners>
-        <listener class-name="com.example.demo.TestResultListener"/>
-    </listeners>
+    <test name="Demo Project Tests">
 
-    <!-- ========================= -->
-    <!-- Main Test Configuration -->
-    <!-- ========================= -->
-    <test name="Demo Application Tests">
-
-        <!-- Run tests by groups -->
+        <!-- Run all groups used in your project -->
         <groups>
             <run>
                 <include name="servlet"/>
@@ -27,7 +19,7 @@
             </run>
         </groups>
 
-        <!-- Test Classes -->
+        <!-- Test classes -->
         <classes>
             <class name="com.example.demo.DemoApplicationTests"/>
         </classes>
