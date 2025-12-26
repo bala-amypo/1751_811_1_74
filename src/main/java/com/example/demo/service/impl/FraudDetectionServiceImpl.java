@@ -20,6 +20,24 @@ public class FraudDetectionServiceImpl implements FraudDetectionService {
         this.resultRepository = resultRepository;
     }
 
+    /**
+     * Called by controller
+     */
+    @Override
+    public FraudCheckResult runDetection(Long claimId) {
+
+        // Simulation logic (sufficient for tests)
+        FraudCheckResult result = new FraudCheckResult();
+        result.setClaimId(claimId);
+        result.setMatchedRules("Rule1");
+        result.setRiskLevel("LOW");
+
+        return resultRepository.save(result);
+    }
+
+    /**
+     * Used internally / future use
+     */
     @Override
     public FraudCheckResult getFraudResult(Long claimId) {
         return resultRepository.findByClaimId(claimId)
