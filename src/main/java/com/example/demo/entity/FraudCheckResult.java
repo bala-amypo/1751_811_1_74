@@ -1,39 +1,38 @@
-package com.example.demo.entity;
+package com.example.demo.model;
 
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "fraud_check_results")
 public class FraudCheckResult {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    private Claim claim;
+    private Long claimId;
 
-    private Boolean isFraudulent;
-    private String triggeredRuleName;
-    private String rejectionReason;
+    @Column(length = 500)
+    private String matchedRules;
 
-    // getters & setters
+    private String riskLevel;
+
+    public FraudCheckResult() {}
+
+    // Getters & Setters
     public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public Claim getClaim() { return claim; }
-    public void setClaim(Claim claim) { this.claim = claim; }
+    public Long getClaimId() { return claimId; }
+    public void setClaimId(Long claimId) { this.claimId = claimId; }
 
-    public Boolean getIsFraudulent() { return isFraudulent; }
-    public void setIsFraudulent(Boolean isFraudulent) {
-        this.isFraudulent = isFraudulent;
+    public String getMatchedRules() { return matchedRules; }
+    public void setMatchedRules(String matchedRules) {
+        this.matchedRules = matchedRules;
     }
 
-    public String getTriggeredRuleName() { return triggeredRuleName; }
-    public void setTriggeredRuleName(String triggeredRuleName) {
-        this.triggeredRuleName = triggeredRuleName;
-    }
-
-    public String getRejectionReason() { return rejectionReason; }
-    public void setRejectionReason(String rejectionReason) {
-        this.rejectionReason = rejectionReason;
+    public String getRiskLevel() { return riskLevel; }
+    public void setRiskLevel(String riskLevel) {
+        this.riskLevel = riskLevel;
     }
 }
