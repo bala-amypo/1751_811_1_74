@@ -14,13 +14,13 @@ public class FraudDetectionController {
         this.fraudDetectionService = fraudDetectionService;
     }
 
-    @PostMapping("/detect/{claimId}")
-    public FraudCheckResult detectFraud(@PathVariable Long claimId) {
+    @PostMapping("/{claimId}")
+    public FraudCheckResult detect(@PathVariable Long claimId) {
         return fraudDetectionService.runDetection(claimId);
     }
 
-    @GetMapping("/result/{claimId}")
-    public FraudCheckResult getResult(@PathVariable Long claimId) {
+    @GetMapping("/{claimId}")
+    public FraudCheckResult get(@PathVariable Long claimId) {
         return fraudDetectionService.getFraudResult(claimId);
     }
 }

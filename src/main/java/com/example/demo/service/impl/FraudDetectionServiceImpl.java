@@ -1,46 +1,50 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.FraudCheckResult;
-import com.example.demo.repository.ClaimRepository;
-import com.example.demo.repository.FraudCheckResultRepository;
-import com.example.demo.repository.FraudRuleRepository;
+import com.example.demo.entity.*;
+import com.example.demo.repository.*;
 import com.example.demo.service.FraudDetectionService;
+import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+import java.util.Set;
+
+@Service  // ⭐ THIS IS WHAT YOU WERE MISSING
 public class FraudDetectionServiceImpl implements FraudDetectionService {
 
     private final ClaimRepository claimRepository;
     private final FraudRuleRepository fraudRuleRepository;
     private final FraudCheckResultRepository resultRepository;
 
-    public FraudDetectionServiceImpl(ClaimRepository claimRepository,
-                                     FraudRuleRepository fraudRuleRepository,
-                                     FraudCheckResultRepository resultRepository) {
+    public FraudDetectionServiceImpl(
+            ClaimRepository claimRepository,
+            FraudRuleRepository fraudRuleRepository,
+            FraudCheckResultRepository resultRepository) {
+
         this.claimRepository = claimRepository;
         this.fraudRuleRepository = fraudRuleRepository;
         this.resultRepository = resultRepository;
     }
 
-    /**
-     * Called by controller
-     */
     @Override
     public FraudCheckResult runDetection(Long claimId) {
 
-        // Simulation logic (sufficient for tests)
+        Claim claim = claimRepository.findById(claimId)
+                .orElseThrow(() -> new IllegalArgumentException("Claim not found"));
+
+        Set<FraudRule> rules = fraudRuleRepository.findAllRules();
+
         FraudCheckResult result = new FraudCheckResult();
-        result.setClaimId(claimId);
-        result.setMatchedRules("Rule1");
-        result.setRiskLevel("LOW");
+        result.setClaim(claim);
+        result.setMatchedRules(
+                rules.isEmpty() ? "" : "RULE_MATCHED"
+        );
 
         return resultRepository.save(result);
     }
 
-    /**
-     * Used internally / future use
-     */
     @Override
     public FraudCheckResult getFraudResult(Long claimId) {
         return resultRepository.findByClaimId(claimId)
-                .orElse(null);
+                .orElseThrow(() -> new IllegalArgumentException("Result not found"));
     }
 }
