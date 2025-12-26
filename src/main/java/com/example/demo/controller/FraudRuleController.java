@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/fraud-rules")
+@RequestMapping("/fraud-rules")
 public class FraudRuleController {
 
     private final FraudRuleService fraudRuleService;
@@ -18,12 +18,16 @@ public class FraudRuleController {
     }
 
     @PostMapping
-    public ResponseEntity<FraudRule> createRule(@RequestBody FraudRule rule) {
-        return ResponseEntity.ok(fraudRuleService.createRule(rule));
+    public ResponseEntity<FraudRule> save(@RequestBody FraudRule rule) {
+        return ResponseEntity.ok(
+                fraudRuleService.save(rule)
+        );
     }
 
     @GetMapping
-    public ResponseEntity<List<FraudRule>> getAllRules() {
-        return ResponseEntity.ok(fraudRuleService.getAllRules());
+    public ResponseEntity<List<FraudRule>> getAll() {
+        return ResponseEntity.ok(
+                fraudRuleService.findAll()
+        );
     }
 }
