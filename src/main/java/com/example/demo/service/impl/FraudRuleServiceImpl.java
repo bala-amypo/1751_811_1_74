@@ -1,14 +1,17 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.FraudRule;
+import com.example.demo.model.FraudRule;
 import com.example.demo.repository.FraudRuleRepository;
 import com.example.demo.service.FraudRuleService;
-import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.Set;
 
-@Service
+@Transactional
 public class FraudRuleServiceImpl implements FraudRuleService {
+
+    private static final Set<String> VALID_SEVERITIES =
+            Set.of("LOW", "MEDIUM", "HIGH");
 
     private final FraudRuleRepository fraudRuleRepository;
 
@@ -17,12 +20,16 @@ public class FraudRuleServiceImpl implements FraudRuleService {
     }
 
     @Override
-    public FraudRule createRule(FraudRule rule) {
-        return fraudRuleRepository.save(rule);
-    }
+    public FraudRule addRule(FraudRule rule) {
+        if (!VALID_SEVERITIES.contains(rule.getSeverity())) {
+            throw new IllegalArgumentException("Invalid severity");
+        }
 
-    @Override
-    public List<FraudRule> getAllRules() {
-        return fraudRuleRepository.findAll();
+        fraudRuleRepository.findByRuleName(rule.getRuleName())
+                .ifPresent(r -> {
+                    throw new IllegalArgumentException("Rule already exists");
+                });
+
+        return fraudRuleRepository.save(rule);
     }
 }
