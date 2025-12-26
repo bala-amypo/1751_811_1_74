@@ -16,6 +16,8 @@
                 <include name="manyToMany"/>
                 <include name="security"/>
                 <include name="hql"/>
+               
+
             </run>
         </groups>
 
