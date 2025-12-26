@@ -16,11 +16,29 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User register(User user) {
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User authenticate(String email, String password) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("User not found with email: " + email)
+                );
+
+        if (!user.getPassword().equals(password)) {
+            throw new RuntimeException("Invalid credentials");
+        }
+
+        return user;
+    }
+
+    @Override
     public User getUserById(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException(
-                                "User not found with id: " + id
-                        ));
+                        new ResourceNotFoundException("User not found with id: " + id)
+                );
     }
 }
