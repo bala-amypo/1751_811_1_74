@@ -3,8 +3,5 @@ package com.example.demo.service;
 import com.example.demo.entity.User;
 
 public interface UserService {
-
-    User register(User user);
-
-    User authenticate(String username, String password);
+    User getUserById(Long id);
 }
