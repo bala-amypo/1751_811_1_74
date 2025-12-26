@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/claims")
+@RequestMapping("/claims")
 public class ClaimController {
 
     private final ClaimService claimService;
@@ -16,13 +16,19 @@ public class ClaimController {
         this.claimService = claimService;
     }
 
-    @PostMapping
-    public Claim createClaim(@RequestBody Claim claim) {
-        return claimService.saveClaim(claim);
+    @PostMapping("/{policyId}")
+    public Claim create(@PathVariable Long policyId,
+                        @RequestBody Claim claim) {
+        return claimService.createClaim(policyId, claim);
+    }
+
+    @GetMapping("/{id}")
+    public Claim get(@PathVariable Long id) {
+        return claimService.getClaim(id);
     }
 
     @GetMapping
-    public List<Claim> getAllClaims() {
+    public List<Claim> all() {
         return claimService.getAllClaims();
     }
 }
