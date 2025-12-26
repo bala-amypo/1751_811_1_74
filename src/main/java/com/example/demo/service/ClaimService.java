@@ -1,10 +1,13 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Claim;
+import java.util.List;
 
 public interface ClaimService {
 
-    Claim createClaim(Long policyId, Claim claim);
+    Claim createClaim(Claim claim);
 
-    Claim getClaim(Long claimId);
+    List<Claim> getAllClaims();
+
+    Claim getClaimById(Long id);
 }
