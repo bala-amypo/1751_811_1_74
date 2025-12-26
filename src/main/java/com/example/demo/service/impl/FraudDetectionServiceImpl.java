@@ -5,10 +5,9 @@ import com.example.demo.repository.*;
 import com.example.demo.service.FraudDetectionService;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 import java.util.Set;
 
-@Service  // ⭐ THIS IS WHAT YOU WERE MISSING
+@Service
 public class FraudDetectionServiceImpl implements FraudDetectionService {
 
     private final ClaimRepository claimRepository;
@@ -31,10 +30,10 @@ public class FraudDetectionServiceImpl implements FraudDetectionService {
         Claim claim = claimRepository.findById(claimId)
                 .orElseThrow(() -> new IllegalArgumentException("Claim not found"));
 
-        Set<FraudRule> rules = fraudRuleRepository.findAllRules();
+        Set<FraudRule> rules = Set.copyOf(fraudRuleRepository.findAll());
 
         FraudCheckResult result = new FraudCheckResult();
-        result.setClaim(claim);
+        result.setClaimId(claimId);
         result.setMatchedRules(
                 rules.isEmpty() ? "" : "RULE_MATCHED"
         );
