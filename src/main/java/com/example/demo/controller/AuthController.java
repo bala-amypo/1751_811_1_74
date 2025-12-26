@@ -1,10 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.User;
-import com.example.demo.security.JwtUtil;
 import com.example.demo.service.UserService;
-
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,35 +9,19 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final UserService userService;
-    private final JwtUtil jwtUtil;
 
-    public AuthController(UserService userService, JwtUtil jwtUtil) {
+    public AuthController(UserService userService) {
         this.userService = userService;
-        this.jwtUtil = jwtUtil;
     }
 
-    /**
-     * Register a new user
-     */
     @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody User user) {
-        User savedUser = userService.register(user);
-        return ResponseEntity.ok(savedUser);
+    public User register(@RequestBody User user) {
+        return userService.register(user);
     }
 
-    /**
-     * Login and generate JWT token
-     */
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody User user) {
-
-        // authenticate user
-        User authenticatedUser =
-                userService.authenticate(user.getEmail(), user.getPassword());
-
-        // generate JWT
-        String jwt = jwtUtil.generateToken(authenticatedUser.getEmail());
-
-        return ResponseEntity.ok(jwt);
+    public User login(@RequestParam String username,
+                      @RequestParam String password) {
+        return userService.authenticate(username, password);
     }
 }
