@@ -1,8 +1,8 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.model.Claim;
-import com.example.demo.model.Policy;
+import com.example.demo.entity.Claim;
+import com.example.demo.entity.Policy;
 import com.example.demo.repository.ClaimRepository;
 import com.example.demo.repository.PolicyRepository;
 import com.example.demo.service.ClaimService;
