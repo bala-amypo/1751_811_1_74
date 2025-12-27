@@ -1,10 +1,8 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.FraudCheckResult;
+import com.example.demo.model.FraudCheckResult;
 
 public interface FraudDetectionService {
-
-    FraudCheckResult runDetection(Long claimId);
-
-    FraudCheckResult getFraudResult(Long claimId);
+    FraudCheckResult evaluateClaim(Long claimId);
+    FraudCheckResult getResultByClaim(Long claimId);
 }
