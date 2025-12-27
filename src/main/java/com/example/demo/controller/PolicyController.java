@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.PolicyDto;
-import com.example.demo.model.Policy;
+import com.example.demo.entity.Policy;
 import com.example.demo.service.PolicyService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

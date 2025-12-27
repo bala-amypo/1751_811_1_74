@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.FraudRuleDto;
-import com.example.demo.model.FraudRule;
+import com.example.demo.entity.FraudRule;
 import com.example.demo.service.FraudRuleService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

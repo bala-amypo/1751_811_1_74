@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.FraudCheckResult;
+import com.example.demo.entity.FraudCheckResult;
 import com.example.demo.service.FraudDetectionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
