@@ -1,6 +1,6 @@
 package com.example.demo;
 
-import com.example.demo.entity.*;
+import com.example.demo.model.*;
 import com.example.demo.repository.*;
 import com.example.demo.security.JwtUtil;
 import com.example.demo.service.*;
