@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.ClaimDto;
-import com.example.demo.entity.Claim;
+import com.example.demo.model.Claim;
 import com.example.demo.service.ClaimService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
