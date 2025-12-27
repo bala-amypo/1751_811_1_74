@@ -1,6 +1,6 @@
 package com.example.demo.repository;
 
-import com.example.demo.entity.FraudCheckResult;
+import com.example.demo.model.FraudCheckResult;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

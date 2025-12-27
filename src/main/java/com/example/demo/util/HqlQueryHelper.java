@@ -1,6 +1,6 @@
 package com.example.demo.util;
 
-import com.example.demo.entity.Claim;
+import com.example.demo.model.Claim;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
