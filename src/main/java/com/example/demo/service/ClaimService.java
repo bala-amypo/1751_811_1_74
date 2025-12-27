@@ -1,6 +1,6 @@
     package com.example.demo.service;
 
-    import com.example.demo.model.Claim;
+    import com.example.demo.entity.Claim;
     import java.util.List;
 
     public interface ClaimService {
