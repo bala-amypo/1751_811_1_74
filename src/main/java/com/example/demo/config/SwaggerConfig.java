@@ -24,7 +24,7 @@ public class SwaggerConfig {
                 )
                 
                 .servers(List.of(
-                        new Server().url("https://9015.32procr.amypo.ai/")
+                        new Server().url("https://9310.pro604cr.amypo.ai/")
                 ))
                 
                 .addSecurityItem(
