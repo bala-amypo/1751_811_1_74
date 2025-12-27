@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Policy;
+import com.example.demo.dto.PolicyDto;
+import com.example.demo.model.Policy;
 import com.example.demo.service.PolicyService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,26 +11,28 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/policies")
 public class PolicyController {
-
+    
     private final PolicyService policyService;
-
+    
     public PolicyController(PolicyService policyService) {
         this.policyService = policyService;
     }
-
-    // ✅ CREATE POLICY
-    @PostMapping("/user/{userId}")
-    public ResponseEntity<Policy> createPolicy(
-            @PathVariable Long userId,
-            @RequestBody Policy policy) {
-
-        Policy saved = policyService.createPolicy(userId, policy);
-        return ResponseEntity.ok(saved);
+    
+    @PostMapping("/{userId}")
+    public ResponseEntity<Policy> createPolicy(@PathVariable Long userId, @RequestBody PolicyDto policyDto) {
+        Policy policy = new Policy();
+        policy.setPolicyNumber(policyDto.getPolicyNumber());
+        policy.setPolicyType(policyDto.getPolicyType());
+        policy.setStartDate(policyDto.getStartDate());
+        policy.setEndDate(policyDto.getEndDate());
+        
+        Policy savedPolicy = policyService.createPolicy(userId, policy);
+        return ResponseEntity.ok(savedPolicy);
     }
-
-    // ✅ GET ALL POLICIES
-    @GetMapping
-    public ResponseEntity<List<Policy>> getAllPolicies() {
-        return ResponseEntity.ok(policyService.getAllPolicies());
+    
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Policy>> getPoliciesByUser(@PathVariable Long userId) {
+        List<Policy> policies = policyService.getPoliciesByUser(userId);
+        return ResponseEntity.ok(policies);
     }
 }
