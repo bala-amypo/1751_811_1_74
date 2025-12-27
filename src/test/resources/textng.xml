@@ -3,29 +3,10 @@
 
 <suite name="Demo Application Test Suite" verbose="1">
 
-    <test name="Demo Project Tests">
-
-        <!-- Run all groups used in your project -->
-        <groups>
-            <run>
-                <include name="servlet"/>
-                <include name="crud"/>
-                <include name="di"/>
-                <include name="hibernate"/>
-                <include name="jpa"/>
-                <include name="manyToMany"/>
-                <include name="security"/>
-                <include name="hql"/>
-               
-
-            </run>
-        </groups>
-
-        <!-- Test classes -->
-        <classes>
-            <class name="com.example.demo.DemoApplicationTests"/>
-        </classes>
-
+    <test name="All Tests">
+        <packages>
+            <package name="com.example.demo"/>
+        </packages>
     </test>
 
 </suite>
